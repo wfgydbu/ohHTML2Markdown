@@ -1,13 +1,13 @@
-from setuptools import find_packages, setup
+import setuptools
 
-with open('README.md') as f:
-    readme = f.read()
+with open('README.md', 'r',encoding='utf-8') as fh:
+    long_description = fh.read()
 
-setup(
+setuptools.setup(
     name="ohHTML2Markdown",
-    version="0.1",
+    version="0.1.1",
     description="A Python Libary for converting HTML to md.",
-    long_description=readme,
+    long_description=long_description,
     author="Ethan Huang",
     author_email="wfgydbu@163.com",
     url='https://github.com/wfgydbu/ohHTML2Markdown',

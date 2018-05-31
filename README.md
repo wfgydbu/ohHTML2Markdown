@@ -29,6 +29,9 @@ result = h2m.Parser("<h1>h1</h1>", h2m.Parser.STRING).convert()
 
 # 或从文件读取
 result = h2m.Parser("test/test.html", h2m.Parser.FILE).convert()
+
+with open("test/out.md", 'w', encoding='utf-8') as file:
+        file.write(result)
 ```
 
 
