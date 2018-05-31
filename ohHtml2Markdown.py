@@ -2,7 +2,7 @@ import re
 from bs4 import BeautifulSoup
 from bs4.element import Tag, NavigableString, Comment
 
-BLOCK_ELEMENTS__PARSED = ['section', 'div', 'html', 'body', 'head']
+BLOCK_ELEMENTS__PARSED = ['section', 'div', 'html', 'body', 'head', 'article']
 
 class Parser(object):
     FILE = 1

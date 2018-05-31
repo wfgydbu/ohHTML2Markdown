@@ -1,1 +1,26 @@
-<p><i>a</i></p>
+<article class="markdown-body entry-content" itemprop="text"><h1><a id="user-content-ohhtml2markdown" class="anchor" aria-hidden="true" href="#ohhtml2markdown"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ohHTML2Markdown</h1>
+<p>当爬取一些如新闻、简书、知乎之类的面向文档的网站时，通常需要将文章保存下来，最合适的介质莫过于Markdown文档（有些网站本来就是用Markdown渲染出来的）。<code>ohHTML2Markdown</code>可以将一部分或整个网页转化为Markdown文档，<code>ohHTML2Markdown</code>会尽量处理一些不规范的HTML文档，但是不保证输出文档的质量。</p>
+<p>目前支持的HTML标签有：<code>h1~h6</code>, <code>p</code>, <code>a</code>, <code>img</code>, <code>del</code>, <code>b</code>, <code>strong</code>, <code>i</code>, <code>em</code>, <code>hr</code>, <code>br</code>, <code>ul</code>, <code>ol</code>, <code>table</code>, <code>blockquote</code>, <code>code</code>, <code>pre</code>, <code>span</code>, <code>title</code>, <code>time</code>, <code>iframe</code>, <code>section</code>, <code>div</code>, <code>html</code>, <code>body</code>, <code>head</code>。</p>
+<p>处理主要靠的是<code>BeautifulSoup</code>库的<code>html.parser</code>解析器和<code>.descendants</code>对象。前者可以把html文档解析成一个树状模型，访问<code>.contents</code>可以访问到当前层级的所有子树的根节点；后者可以返回一个生成器，它包含了当前子树的所有节点（包含本身）。</p>
+<p>通过判断<code>descendants</code>的长度可以知道该子树有没有子节点，然后 根据当前tag的类型，可以选择继续进行深度遍历还是将它转换为Markdown的语义。</p>
+<p>其他关于本库的一些细节：<a href="https://journal.ethanshub.com/post/category/gong-cheng-shi/-python-ohhtme2mardown" rel="nofollow">发布自己的Python包 - ohHTML2Markdown</a>。</p>
+<h2><a id="user-content-安装" class="anchor" aria-hidden="true" href="#安装"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>安装</h2>
+<pre><code>pip install ohHTML2Markdown
+</code></pre>
+<h2><a id="user-content-使用" class="anchor" aria-hidden="true" href="#使用"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>使用</h2>
+<pre><code>import ohHtml2Markdown as h2m
+
+result = h2m.Parser("&lt;h1&gt;h1&lt;/h1&gt;", h2m.Parser.STRING).convert()
+
+# 或从文件读取
+result = h2m.Parser("test/test.html", h2m.Parser.FILE).convert()
+</code></pre>
+<h1><a id="user-content-todo" class="anchor" aria-hidden="true" href="#todo"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>TODO</h1>
+<ul>
+<li>扩展子块用于解析特性网站的特定标签</li>
+<li>Nested列表（当前版本可以识别这种列表，但是无法输出正确格式的markdown，不会计算缩进）</li>
+<li>其他未涉及的HTML标签</li>
+<li>命令行工具</li>
+<li>其他需要修改的问题</li>
+</ul>
+</article>  
